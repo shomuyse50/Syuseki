@@ -3,6 +3,7 @@ import java.awt.event.*;
 import javax.swing.*;
 import java.io.*;
 import java.util.*;
+import java.text.*;
 
 public class Syuseki {
 	public static void main(String[] args){
@@ -18,7 +19,9 @@ class SyusekiMan implements ActionListener{
 	JTextField field;
 	JTextArea area;
 	JFileChooser fc;
+	JLabel label;
 	String textdata;
+	String tmp;
 	
 
 	public SyusekiMan(){
@@ -35,6 +38,7 @@ class SyusekiMan implements ActionListener{
 		panel.add(btn2);
 		field = new JTextField(10);
 		area = new JTextArea(10,30);
+		label = new JLabel();
 		
 		//area.setLineWrap(true);
 
@@ -78,6 +82,26 @@ class SyusekiMan implements ActionListener{
 			}catch(Exception e){
 				e.printStackTrace();
 			}
-		}
+		}else if(cmd.equals("tuika")){
+				String st = field.getText().toString();
+				String st2 = st.substring(st.length()-1,st.length());
+				String name = st.substring(0,st.length()-1);
+
+				Calendar c = Calendar.getInstance();
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日 E曜日");
+				sdf.applyPattern("HH:mm");
+				String time = String.valueOf(sdf.format(c.getTime()));
+
+			if(st2.equals("○")){
+				tmp="出席";	
+			}else if(st2.equals("△")){
+				tmp="遅刻";
+			}else if(st2.equals("×")){
+				tmp="欠席";
+			}
+
+			area.append(name+","+time+","+tmp+"\n");
+
 	}
+}
 }
